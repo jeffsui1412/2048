@@ -1,0 +1,19 @@
+<Box>:
+    canvas:
+        Color:
+            rgba: 1, .5, .5, .8
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    text: str(self.value)
+    font_size: "80dp"
+
+
+GameSpace:
+    padding: 10
+    spacing: 5
+    rows: 4
+    cols: 4
+    width: self.height
+    size_hint_x: None
