@@ -54,30 +54,44 @@ class GameSpace(GridLayout):
         return self.children[-row * 4 + 4 - col]
 
     def check_value(self, current_box, next_box):
+        print(current_box.value, next_box.value)
         if next_box.value == 0:
             next_box.value = current_box.value
             current_box.value = 0
+            # self.new_box()
+            return next_box
+        elif next_box.value == current_box.value:
+            next_box.value = current_box.value * 2
+            current_box.value = 0
+            # self.new_box()
             return next_box
 
     def on_keyboard_down(self, keyboard, keycode, text, modifiers):
-        if keycode[1] == "up":
+        if keycode[1] == "up" or keycode[1] == "down":
             for col in range(1, 5):
-                for box in range(2, 5):
-                    current_box = self.get_box(box, col)
-                    for element in range(box - 1, 0, -1):
-                        current_box = self.check_value(current_box, self.get_box(element, col))
+                if keycode[1] == "up":
+                    for box in range(2, 5):
+                        current_box = self.get_box(box, col)
+                        for element in range(box - 1, 0, -1):
+                            current_box = self.check_value(current_box, self.get_box(element, col))
+                elif keycode[1] == "down":
+                    for box in range(1, 4):
+                        current_box = self.get_box(box, col)
+                        for element in range(box + 1, 5):
+                            current_box = self.check_value(current_box, self.get_box(element, col))
 
-        elif keycode[1] == "down":
-            for col in range(1, 5):
-                for box in range(1, 4):
-                    current_box = self.get_box(box, col)
-                    for element in range(box, 5,):
-                        current_box = self.check_value(current_box, self.get_box(element, col))
-
-        elif keycode[1] == "left":
-            pass
-        elif keycode[1] == "right":
-            pass
+        elif keycode[1] == "left" or keycode[1] == "right":
+            for row in range(1, 5):
+                if keycode[1] == "left":
+                    for box in range(2, 5):
+                        current_box = self.get_box(row, box)
+                        for element in range(box - 1, 0, -1):
+                            current_box = self.check_value(current_box, self.get_box(row, element))
+                elif keycode[1] == "right":
+                    for box in range(1, 4):
+                        current_box = self.get_box(row, box)
+                        for element in range(box + 1, 5):
+                            current_box = self.check_value(current_box, self.get_box(row, element))
 
     def on_keyboard_up(self, keyboard, keycode):
         pass
