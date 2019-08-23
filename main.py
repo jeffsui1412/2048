@@ -21,6 +21,9 @@ class Box(Label):
         self.value = kwargs.pop("value")
         super(Box, self).__init__(**kwargs)
 
+    def on_value(self, value, instance):
+        pass
+
 
 class GameSpace(GridLayout):
 
@@ -74,11 +77,15 @@ class GameSpace(GridLayout):
                         current_box = self.get_box(box, col)
                         for element in range(box - 1, 0, -1):
                             current_box = self.check_value(current_box, self.get_box(element, col))
+                            if not current_box:
+                                break
                 elif keycode[1] == "down":
                     for box in range(1, 4):
                         current_box = self.get_box(box, col)
                         for element in range(box + 1, 5):
                             current_box = self.check_value(current_box, self.get_box(element, col))
+                            if not current_box:
+                                break
 
         elif keycode[1] == "left" or keycode[1] == "right":
             for row in range(1, 5):
@@ -87,11 +94,17 @@ class GameSpace(GridLayout):
                         current_box = self.get_box(row, box)
                         for element in range(box - 1, 0, -1):
                             current_box = self.check_value(current_box, self.get_box(row, element))
+                            if not current_box:
+                                break
+
                 elif keycode[1] == "right":
                     for box in range(1, 4):
                         current_box = self.get_box(row, box)
                         for element in range(box + 1, 5):
                             current_box = self.check_value(current_box, self.get_box(row, element))
+                            if not current_box:
+                                break
+        self.new_box()
 
     def on_keyboard_up(self, keyboard, keycode):
         pass

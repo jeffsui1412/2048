@@ -1,13 +1,16 @@
 <Box>:
-    canvas:
+    background_color: 1, 1, 1, 1
+
+    canvas.before:
         Color:
-            rgba: 1, .5, .5, .8
+            rgba: self.background_color
         Rectangle:
             pos: self.pos
             size: self.size
 
-    text: str(self.value)
+    text: str(self.value) if self.value else ""
     font_size: "80dp"
+    color: 0, 0, 0, 1
 
 
 GameSpace:
